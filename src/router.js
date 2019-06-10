@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Create from './views/Create.vue'
@@ -11,7 +10,17 @@ export default new Router({
     {
       path: '/',
       name: 'create',
-      component: Create
+      component: () => import('./views/Create.vue')
+    },
+    {
+      path: '/list',
+      name: 'list',
+      component: () => import('./views/List.vue')
+    },
+    {
+      path: '/task/:id',
+      name: 'task',
+      component: () => import('./views/Task.vue')
     }
   ]
 })
