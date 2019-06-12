@@ -1,17 +1,18 @@
 <template>
   <div>
     <h1>Create task</h1>
-    <form @submit.prevent="submitHandler">
+    <hr>
+    <form @submit.prevent="submitHandler" class="s6">
       <div class="input-field">
-        <input placeholder="title" id="title" type="text" required class="validate">
+        <input placeholder="title" id="title" v-model="title" type="text" required class="validate">
         <label for="title">Title</label>
         <span class="helper-text" data-error="Title is required"></span>
       </div>
        <div class="chips" ref="chips"></div>
-        <div class="input-field col s12">
+        <div class="input-field">
           <textarea id="description" class="materialize-textarea" v-model="description"></textarea>
           <label for="description">Textarea</label>
-          <span class="character-counter" style="float: right; font-size: 12px;">{{ description.length }}/120</span>
+          <span class="character-counter" style="float: right; font-size: 12px;">{{ description.length }}/2048</span>
         </div>
         <input type="text" class="datepicker" ref="datepicker">
         <button class="btn">Create task</button>
@@ -49,6 +50,16 @@ export default {
         id: Date.now(),
         tags: this.chips.chipsData,
         date: this.date.date
+      }
+      this.$store.dispatch('createTask', task)
+      this.$router.push('/list')
+    },
+    destroyed() {
+      if (this.data && this.date.destroy) {
+        this.date.destroy()
+      }
+      if (this.chips && this.chips.destroy) {
+        this.chips.destroy()
       }
     }
   }

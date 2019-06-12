@@ -1,10 +1,18 @@
 <template>
-  <h1>Task</h1>
+  <div>
+  <h1>{{task.title}}</h1>
+
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Task'
+  name: 'Task',
+  computed: {
+    task() {
+      return this.$store.getters.taskById(+this.$route.params.id)
+    }
+  }
 }
 </script>
 
