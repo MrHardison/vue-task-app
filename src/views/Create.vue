@@ -15,7 +15,7 @@
           <span class="character-counter" style="float: right; font-size: 12px;">{{ description.length }}/2048</span>
         </div>
         <input type="text" class="datepicker" ref="datepicker">
-        <button class="btn">Create task</button>
+        <button type="submit" class="btn">Create task</button>
     </form>
   </div>
 </template>
