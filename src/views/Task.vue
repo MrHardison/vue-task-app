@@ -10,9 +10,11 @@
           <span class="character-counter" style="float: right; font-size: 12px;">{{ task.description.length }}/2048</span>
         </div>
         <input type="text" class="datepicker" ref="datepicker">
-        <div class="btn-wrapper">
+        <div
+          v-if="task.status !== 'completed'"
+          class="btn-wrapper">
           <button type="submit" class="btn">Update task</button>
-          <button type=""button class="btn blue">Complete task</button>
+          <button type=""button class="btn blue" @click="completeTask">Complete task</button>
         </div>
       </form>
     </template>
@@ -56,6 +58,10 @@ export default {
         description: this.description,
         date: this.date.date
       })
+      this.$router.push('/list')
+    },
+    completeTask() {
+      this.$store.dispatch('completeTask', +this.task.id)
       this.$router.push('/list')
     },
     destroyed() {
