@@ -1,6 +1,20 @@
 <template>
   <div>
     <h1>List</h1>
+    <div class="input-field">
+      <select ref="select" v-model="filter">
+        <option value="" disabled selected>Choose your option</option>
+        <option value="completed">Completed</option>
+        <option value="active">Active</option>
+        <option value="outdated">Outdated</option>
+      </select>
+      <label>Materialize Select</label>
+    </div>
+    <button
+      class="btn red"
+      @click="clearFilter">
+      Clear filter
+    </button>
     <hr>
     <table v-if="tasks">
       <thead>
@@ -15,7 +29,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(task, i) in tasks"
+          v-for="(task, i) in filteredTasks"
           :key="i">
           <td>{{i+1}}</td>
           <td>{{task.title}}</td>
@@ -39,9 +53,31 @@
 <script>
 export default {
   name: 'List',
+  data() {
+    return {
+      filter: null
+    }
+  },
   computed: {
     tasks() {
       return this.$store.getters.tasks
+    },
+    filteredTasks() {
+      return this.tasks.filter(task => {
+        if (!this.filter) {
+          return true
+        } else {
+          return task.status === this.filter
+        }
+      })
+    }
+  },
+  mounted() {
+    M.FormSelect.init(this.$refs.select)
+  },
+  methods: {
+    clearFilter() {
+      this.filter = null
     }
   }
 }
